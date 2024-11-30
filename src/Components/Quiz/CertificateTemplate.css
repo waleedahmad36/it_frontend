@@ -1,0 +1,21 @@
+/* Stylish Border Effect */
+.certificate-border {
+  border: 8px solid #e2e8f0; /* Outer light gray border */
+  position: relative;
+  border-radius: 10px;
+}
+
+.certificate-border::before {
+  content: "";
+  position: absolute;
+  inset: -15px; /* Decorative space around border */
+  z-index: -1;
+  border: 10px solid #0f172a; /* Dark blue border layer */
+  border-radius: 20px;
+}
+
+/* Flyover Background Styling */
+.flyover-bg {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.01));
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+}
