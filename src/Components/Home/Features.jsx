@@ -1,9 +1,9 @@
 import React from 'react';
 import './Feauture.css';
-import { Link, Links } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 
 
-const Features = () => {
+const Features = ({user}) => {
   return (
     <>
         <div className="flex flex-col lg:flex-row justify-between items-center px-6 md:px-16 py-10 min-h-screen max-w-[1250px] mx-auto">
@@ -46,15 +46,29 @@ const Features = () => {
         {/* Column 2 */}
         <div className="flex flex-col gap-4">
           <div className="w-[260px] h-[290px] feature2-bg rounded-lg relative">
-            <Link to={'/quiz'} >            <button className="bg-white py-4 md:py-8 w-[85%] rounded-lg text-black font-bold absolute bottom-8 left-1/2 -translate-x-1/2 hover:bg-red-500 hover:text-white transition-all duration-300">
-              Apply for Certificate
-            </button>
-            </Link>
+
+            {
+              user.role === 'student' && (
+                <Link to={'/quiz'} >            <button className="bg-white py-4 md:py-8 w-[85%] rounded-lg text-black font-bold absolute bottom-8 left-1/2 -translate-x-1/2 hover:bg-red-500 hover:text-white transition-all duration-300">
+                Apply for Certificate
+              </button>
+              </Link>
+              )
+            }
+
+            {
+              user.role !== 'student' && (
+                <Link to={'/courses/create'} >            <button className="bg-white py-4 md:py-8 w-[85%] rounded-lg text-black font-bold absolute bottom-8 left-1/2 -translate-x-1/2 hover:bg-red-500 hover:text-white transition-all duration-300">
+                Add more courses
+              </button>
+              </Link>
+              )
+            }
 
           </div>
           <div className="w-[260px] h-[310px] feature3-bg rounded-lg relative">
             <button className="bg-white py-4 md:py-8 w-[85%] rounded-lg text-black font-bold absolute bottom-8 left-1/2 -translate-x-1/2 hover:bg-red-500 hover:text-white transition-all duration-300">
-              <Link to={'/about'} >About Us</Link>
+              <Link to={'/playlist'} >Playlists</Link>
             </button>
           </div>
         </div>

@@ -49,7 +49,7 @@ const About = () => {
             whileHover={{ scale: 1.05 }}
           />
           <div className="text-left md:w-1/2">
-            <h2 className="text-3xl font-bold text-gray-800">Why Choose Us?</h2>
+            <h2 className="text-3xl font-bold text-gray-800 ">Why Choose Us?</h2>
             <p className="mt-4 text-gray-700 leading-relaxed">
               Whether you're a curious kid, a teen diving into coding, or an adult upgrading your tech skills, we're here to guide you every step of the way.
             </p>

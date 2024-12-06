@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { API_URL } from "../constants";
 import CertificateTemplate from "../Components/Quiz/CertificateTemplate";
+import { Link } from "react-router-dom";
 
 const Quiz = ({ user }) => {
   const [quizzes, setQuizzes] = useState([]);
@@ -13,6 +14,8 @@ const Quiz = ({ user }) => {
   const [timeLeft, setTimeLeft] = useState(300); // 5 minutes timer
   const [isCertificateVisible, setIsCertificateVisible] = useState(false);
   const [quizResult, setQuizResult] = useState(null);
+  const [isFailed, setIsFailed] = useState(false);
+  const [failureReason, setFailureReason] = useState(""); // New state for failure reason
   const timerRef = useRef(null);
 
   // Fetch quizzes on mount
@@ -43,6 +46,23 @@ const Quiz = ({ user }) => {
     return () => clearInterval(timerRef.current);
   }, [isQuizStarted, timeLeft]);
 
+  // Detect tab changes
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (isQuizStarted && document.visibilityState === "hidden") {
+        clearInterval(timerRef.current);
+        setIsQuizStarted(false);
+        setIsFailed(true);
+        setFailureReason("tabChange");
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [isQuizStarted]);
+
   // Start quiz
   const handleQuizStart = (quizId) => {
     const selected = quizzes.find((quiz) => quiz._id === quizId);
@@ -59,25 +79,6 @@ const Quiz = ({ user }) => {
     const updatedAnswers = [...answers];
     updatedAnswers[questionIndex] = optionIndex;
     setAnswers(updatedAnswers);
-  };
-
-  // Move to the next question or topic
-  const handleNextQuestion = () => {
-    if (
-      currentQuestionIndex <
-      selectedQuiz.topics[currentTopicIndex].questions.length - 1
-    ) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-    } else {
-      handleNextTopic();
-    }
-  };
-
-  const handleNextTopic = () => {
-    if (currentTopicIndex < selectedQuiz.topics.length - 1) {
-      setCurrentTopicIndex(currentTopicIndex + 1);
-      setCurrentQuestionIndex(0);
-    }
   };
 
   // Submit quiz and calculate result
@@ -103,15 +104,45 @@ const Quiz = ({ user }) => {
     );
     const percentage = (correctAnswers / totalQuestions) * 100;
 
-    if (percentage >= 60) {
-      setQuizResult({ correctAnswers, totalQuestions, percentage });
+    setQuizResult({ correctAnswers, totalQuestions, percentage });
+
+    if (percentage >= 70) {
       setIsCertificateVisible(true);
     } else {
-      alert(`You scored ${correctAnswers}/${totalQuestions}. Percentage: ${percentage.toFixed(2)}%.`);
+      setIsFailed(true);
+      setFailureReason("lowScore");
     }
 
     setIsQuizStarted(false);
   };
+
+  // Render failure or motivational UI
+  if (isFailed) {
+    const failureMessage =
+      failureReason === "tabChange"
+        ? "Hey, you cannot change the tab. You are failed."
+        : "You are not passed. Work hard, then try again.";
+
+    return (
+      <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center">
+        <h1 className="text-3xl font-bold mb-4">{failureMessage}</h1>
+        <p className="text-lg mb-6">Go work hard and come back better prepared, sir.</p>
+        <div className="flex gap-4">
+          <button
+            className="bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded"
+            onClick={() => window.location.reload()}
+          >
+            Restart Quiz
+          </button>
+          <Link to="/">
+            <button className="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded">
+              Go to Home
+            </button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   // Render Certificate
   if (isCertificateVisible && selectedQuiz) {
@@ -194,24 +225,26 @@ const Quiz = ({ user }) => {
       </main>
 
       <footer className="w-full py-4 bg-gray-800 flex justify-center gap-4">
-        {currentQuestionIndex <
-        selectedQuiz.topics[currentTopicIndex].questions.length - 1 ? (
+        {currentQuestionIndex < currentTopic.questions.length - 1 ? (
           <button
             className="bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded"
-            onClick={handleNextQuestion}
+            onClick={() => setCurrentQuestionIndex((prev) => prev + 1)}
           >
             Next Question
           </button>
         ) : currentTopicIndex < selectedQuiz.topics.length - 1 ? (
           <button
             className="bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded"
-            onClick={handleNextTopic}
+            onClick={() => {
+              setCurrentTopicIndex((prev) => prev + 1);
+              setCurrentQuestionIndex(0);
+            }}
           >
             Next Topic
           </button>
         ) : (
           <button
-            className="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded"
+            className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded"
             onClick={handleSubmitQuiz}
           >
             Submit Quiz

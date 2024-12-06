@@ -5,12 +5,16 @@ import authReducer from "../features/authSlice";  // Import authSlice reducer
 // import { purchaseApi } from "@/features/api/purchaseApi"; // Placeholder for future API (purchases)
 import { authApi } from "../features/api/authApi";
 import { courseApi } from "../features/api/courseApi";
+import { playlistApi } from "../features/api/playlistApi";
+import adminActionApi from "../features/api/adminActionApi";
 // import { courseProgressApi } from "@/features/api/courseProgressApi"; // Placeholder for future API (course progress)
 
 // Combine the reducers
 const rootReducer = combineReducers({
   [authApi.reducerPath]: authApi.reducer, // Add authApi reducer
   [courseApi.reducerPath]: courseApi.reducer, // Future courseApi
+  [playlistApi.reducerPath]: playlistApi.reducer,
+  [adminActionApi.reducerPath] : adminActionApi.reducer,
 //   [purchaseApi.reducerPath]: purchaseApi.reducer, // Future purchaseApi
 //   [courseProgressApi.reducerPath]: courseProgressApi.reducer, // Future courseProgressApi
   auth: authReducer,  // Add authSlice reducer for user authentication

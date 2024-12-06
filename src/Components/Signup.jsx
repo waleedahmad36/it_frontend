@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Assuming you have your API services folder
 import { useRegisterUserMutation } from "../features/api/authApi";
+import { toast } from "react-hot-toast"; // Importing toast
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -11,10 +12,10 @@ const Signup = () => {
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [loading,setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const [registerUser] = useRegisterUserMutation();  // Hook for the mutation
-  const navigate = useNavigate();  // Hook for redirecting
+  const [registerUser] = useRegisterUserMutation(); // Hook for the mutation
+  const navigate = useNavigate(); // Hook for redirecting
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,15 +27,22 @@ const Signup = () => {
     setError("");
     setSuccess("");
     try {
-      setLoading(true);;
+      setLoading(true);
       const result = await registerUser(formData).unwrap();
       setLoading(false);
       setSuccess("Signup successful! You are being redirected...");
       setFormData({ username: "", email: "", password: "", role: "student" });
-      navigate("/");  // Redirect after successful signup
+      
+      // Using toast instead of alert
+      toast.success("Your registration request is successfully submitted, wait for admin verification.");
+
+      // Optional: Redirect after success (uncomment to use)
+      // navigate("/");
+
     } catch (err) {
-      setLoading(false)
+      setLoading(false);
       setError(err.message || "Something went wrong. Please try again.");
+      toast.error(error || "Something went wrong. Please try again.");
     }
   };
 
@@ -90,7 +98,6 @@ const Signup = () => {
           >
             <option value="student">Student</option>
             <option value="instructor">Instructor</option>
-            <option value="admin">Admin</option>
           </select>
         </div>
         <button

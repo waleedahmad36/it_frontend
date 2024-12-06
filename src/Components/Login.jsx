@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Hook for the mutation
 import { useLoginUserMutation } from "../features/api/authApi";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -31,8 +32,10 @@ const Login = () => {
       navigate("/");  // Redirect to homepage after successful login
       setFormData({ email: "", password: "" });
     } catch (err) {
+      console.log('error is', err)
       setLoading(false);
-      setError(err.message || "Something went wrong. Please try again.");
+      toast.error(err.data.message || 'Something went wrong')
+      // setError(err.data.message || "Something went wrong. Please try again.");
     }
   };
 

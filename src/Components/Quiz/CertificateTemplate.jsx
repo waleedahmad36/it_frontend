@@ -4,6 +4,7 @@ import { saveAs } from "file-saver";
 import "./CertificateTemplate.css";
 
 const CertificateTemplate = ({ user, selectedQuiz }) => {
+  console.log('selected quiz is' , selectedQuiz)
   const certificateRef = useRef(null);
 
   const handleDownload = async () => {
@@ -100,13 +101,16 @@ const CertificateTemplate = ({ user, selectedQuiz }) => {
           </div>
 
           {/* Footer Information */}
-          <div className="flex flex-wrap justify-between items-center mt-6 md:mt-12">
-            <div className="text-center w-full sm:w-1/2 mb-4 sm:mb-0">
-              <p className="text-xs sm:text-sm font-medium text-gray-500">Authorized By</p>
+          <div className="flex flex-wrap justify-between items-center mt-6 md:mt-12 ">
+            <div className="text-center w-full sm:w-1/2 mb-4 sm:mb-0   relative">
+              <p className="text-xs sm:text-sm font-medium text-gray-500 relative">Authorized By</p>
               <div className="mt-1 w-20 sm:w-32 mx-auto border-t border-gray-400"></div>
-              <p className="text-xs sm:text-sm mt-1 flex justify-center">
-                Instructor <img src="/intructor.png" className="w-6 sm:w-10 mx-2" />
+              <div  className="relative overflow-hidden" >
+              <p className="text-xs sm:text-sm mt-1 flex justify-center relative">
+              <img src={selectedQuiz.instructor.signature} alt="" />
               </p>
+             
+              </div>
             </div>
 
             <div className="text-center w-full sm:w-1/2">

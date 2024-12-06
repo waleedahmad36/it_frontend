@@ -6,7 +6,7 @@ const CreateCourse = ({ user }) => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    category: "",
+    category: "", // default empty category
     instructor: user._id,
     isPaid: false,
     price: "",
@@ -110,17 +110,39 @@ const CreateCourse = ({ user }) => {
           />
         </div>
 
+        {/* Category Dropdown */}
         <div>
           <label className="block text-lg text-gray-700 mb-2">Category</label>
-          <input
-            type="text"
+          <select
             name="category"
             value={formData.category}
             onChange={handleInputChange}
-            placeholder="Enter Course Category"
             className="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             required
-          />
+          >
+            <option value="">Select a Category</option>
+            <option value="Computer Desktop Publishing">Computer Desktop Publishing</option>
+            <option value="Graphic Design">Graphic Design</option>
+            <option value="UI/UX Design">UI/UX Design</option>
+            <option value="Website Development">Website Development</option>
+            <option value="Application Development">Application Development</option>
+            <option value="Game Development">Game Development</option>
+            <option value="3D Modeling">3D Modeling</option>
+            <option value="AI">AI</option>
+            <option value="Data Science">Data Science</option>
+            <option value="Data Analysis">Data Analysis</option>
+            <option value="Data Analytics">Data Analytics</option>
+            <option value="Data Entry">Data Entry</option>
+            <option value="Cyber security">Cyber security</option>
+            <option value="Network Engineering">Network Engineering</option>
+            <option value="Data Engineering">Data Engineering</option>
+            <option value="Software Development">Software Development</option>
+            <option value="Software Engineering (ADSE)">Software Engineering (ADSE)</option>
+            <option value="Cloud Computing">Cloud Computing</option>
+            <option value="Robotics Studies">Robotics Studies</option>
+            <option value="Animation">Animation</option>
+            <option value="Python Programming">Python Programming</option>
+          </select>
         </div>
 
         {/* Paid Course Option */}

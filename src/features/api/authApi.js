@@ -17,16 +17,16 @@ export const authApi = createApi({
                 method: "POST",
                 body: inputData,
             }),
-            async onQueryStarted(_, { queryFulfilled, dispatch }) {
-                try {
-                    const result = await queryFulfilled;
-                    // Storing user data in Redux upon successful signup
-                    dispatch(userLoggedIn({ user: result.data.user }));
-                    window.location.href = "/";  // Redirect to homepage after successful signup
-                } catch (error) {
-                    console.log(error);
-                }
-            },
+            // async onQueryStarted(_, { queryFulfilled, dispatch }) {
+            //     try {
+            //         const result = await queryFulfilled;
+            //         // Storing user data in Redux upon successful signup
+            //         dispatch(userLoggedIn({ user: result.data.user }));
+            //         window.location.href = "/";  // Redirect to homepage after successful signup
+            //     } catch (error) {
+            //         console.log(error);
+            //     }
+            // },
         }),
         loginUser: builder.mutation({
             query: (inputData) => ({
@@ -46,7 +46,7 @@ export const authApi = createApi({
         logoutUser: builder.mutation({
             query: () => ({
                 url: "logout",
-                method: "GET",
+                method: "POST",
             }),
             async onQueryStarted(_, { queryFulfilled, dispatch }) {
                 try {

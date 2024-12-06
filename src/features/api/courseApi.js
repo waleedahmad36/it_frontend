@@ -1,4 +1,3 @@
-// src/features/api/courseApi.js
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_URL } from '../../constants';
 
@@ -10,11 +9,46 @@ export const courseApi = createApi({
     baseUrl: COURSE_API,
     credentials: 'include',
   }),
+  tagTypes: ['Course'],
   endpoints: (builder) => ({
     getAllCourses: builder.query({
-      query: () => 'allcourses', // Your route to get all courses
+      query: () => '/',
+      providesTags: ['Course'],
+    }),
+    getCourseById: builder.query({
+      query: (id) => `/${id}`,
+      providesTags: (result, error, id) => [{ type: 'Course', id }],
+    }),
+    createCourse: builder.mutation({
+      query: (courseData) => ({
+        url: '/create',
+        method: 'POST',
+        body: courseData,
+      }),
+      invalidatesTags: ['Course'],
+    }),
+    updateCourse: builder.mutation({
+      query: ({ id, courseData }) => ({
+        url: `/${id}`,
+        method: 'PUT',
+        body: courseData,
+      }),
+      invalidatesTags: (result, error, { id }) => [{ type: 'Course', id }],
+    }),
+    deleteCourse: builder.mutation({
+      query: (id) => ({
+        url: `/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Course'],
     }),
   }),
 });
 
-export const { useGetAllCoursesQuery } = courseApi;
+export const {
+  useGetAllCoursesQuery,
+  useGetCourseByIdQuery,
+  useCreateCourseMutation,
+  useUpdateCourseMutation,
+  useDeleteCourseMutation,
+} = courseApi;

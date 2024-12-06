@@ -1,21 +1,26 @@
-import React from 'react';
-import './Hero.css';
-import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
-import { FaSearch } from 'react-icons/fa';
+import React from "react";
+import "./Hero.css";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+import { FaSearch } from "react-icons/fa";
 
 const Hero = () => {
   return (
     <div className="relative w-full  h-[130vh] lg:h-[120vh]">
       {/* Hero Background Section */}
       <div className="relative w-full hero-bg pt-10">
-        <div className="flex flex-col lg:flex-row justify-between items-center lg:items-start px-6 md:px-20 py-10 h-[90vh] max-w-[1200px] mx-auto  ">
+        <div className="flex flex-col lg:flex-row justify-between items-center lg:items-start px-6 md:px-20 py-10 h-[90vh] max-w-[1250px] mx-auto  ">
           {/* Left Section */}
-          <div className="max-w-lg text-center md:text-left">
-            <h1 className="text-white text-4xl md:text-6xl font-bold shadow-xl leading-tight">
-              For every student, every classroom. Real results.
+          <div className="max-w-3xl text-center md:text-left">
+            <h1 className="text-white text-4xl sm:text-5xl md:text-5xl lg:text-7xl font-extrabold shadow-lg leading-snug sm:leading-relaxed lg:leading-tight">
+              For every student,
+              <br />
+              <span className="text-red-400">every classroom.</span> <br />
+              <span className="">
+                Real results.
+              </span>
             </h1>
-            <div className="flex items-center gap-4 bg-white rounded-md px-4 py-2 mt-6 mx-auto md:mx-0 max-w-lg">
-              <FaSearch className="text-xl text-blue-500" />
+            <div className="flex items-center gap-4 bg-white rounded-md px-4 py-3 mt-6 mx-auto md:mx-0 max-w-lg">
+              <FaSearch className="text-xl text-red-500" />
               <input
                 className="bg-transparent outline-none flex-1"
                 placeholder="Search for anything"
@@ -42,7 +47,9 @@ const Hero = () => {
             <IoMdCheckmarkCircleOutline className="text-4xl text-blue-500" />
           </div>
           <div>
-            <h1 className="text-xl md:text-2xl font-bold">50K+ Online Courses</h1>
+            <h1 className="text-xl md:text-2xl font-bold">
+              50K+ Online Courses
+            </h1>
             <p className="text-sm md:text-base text-gray-600">
               Enjoy lifetime access to courses
             </p>
@@ -55,7 +62,9 @@ const Hero = () => {
             <IoMdCheckmarkCircleOutline className="text-4xl text-blue-500" />
           </div>
           <div>
-            <h1 className="text-xl md:text-2xl font-bold">Learn at Your Own Pace</h1>
+            <h1 className="text-xl md:text-2xl font-bold">
+              Learn at Your Own Pace
+            </h1>
             <p className="text-sm md:text-base text-gray-600">
               Study anytime, anywhere
             </p>
@@ -68,7 +77,9 @@ const Hero = () => {
             <IoMdCheckmarkCircleOutline className="text-4xl text-blue-500" />
           </div>
           <div>
-            <h1 className="text-xl md:text-2xl font-bold">Expert Instructors</h1>
+            <h1 className="text-xl md:text-2xl font-bold">
+              Expert Instructors
+            </h1>
             <p className="text-sm md:text-base text-gray-600">
               Learn from industry leaders
             </p>

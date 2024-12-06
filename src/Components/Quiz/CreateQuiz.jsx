@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { API_URL } from '../../constants';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const CreateQuiz = ({user}) => {
     console.log(user._id);
@@ -22,8 +23,7 @@ const CreateQuiz = ({user}) => {
         instructor: user._id,
         topics,
       });
-      alert("Quiz Created Successfully");
-      navigate('/admin/dashboard'); // Redirect after creation
+      toast.success('Quiz created successfully')
     } catch (error) {
       console.error("Error creating quiz:", error);
       alert("Failed to create quiz.");
